@@ -20,6 +20,17 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+// Metadados de versão do próprio instalador (aparecem em Propriedades do arquivo).
+[assembly: AssemblyTitle("Bateria dos Dispositivos - Instalador")]
+[assembly: AssemblyDescription("Instalador da Bateria dos Dispositivos (bandeja do Windows, leitura HID direta).")]
+[assembly: AssemblyCompany("MatheusFL99")]
+[assembly: AssemblyProduct("Bateria dos Dispositivos")]
+[assembly: AssemblyCopyright("© 2026 MatheusFL99. Licença MIT.")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
+
 namespace BatteryTraySetup
 {
     static class Program

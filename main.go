@@ -32,6 +32,10 @@ var logPath = func() string {
 	return filepath.Join(filepath.Dir(exe), "batterytray.log")
 }()
 
+// version identifica o build (mostrada no menu; mantida em sincronia com
+// winres/winres.json e com a tag da release).
+const version = "1.0.1"
+
 const pollInterval = 60 * time.Second
 
 // logf registra em arquivo para diagnóstico sem depender de console.
@@ -218,7 +222,7 @@ func updateStatus() {
 
 func onReady() {
 	systray.SetIcon(iconICO)
-	systray.SetTooltip("Bateria dos dispositivos (sem softwares dos fabricantes)")
+	systray.SetTooltip("Bateria dos dispositivos (sem softwares dos fabricantes) v" + version)
 
 	// slots de dispositivo ANTES de qualquer outro item: como o systray ordena
 	// o menu pelo ID de criação, eles ficam sempre no topo — mesmo que o

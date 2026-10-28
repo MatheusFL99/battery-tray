@@ -54,6 +54,19 @@ cd C:\Users\mathe\battery-tray-go
 
 ## Compilar
 
+Para gerar tudo (app + instalador + zip da release), use o script:
+
+```powershell
+cd C:\Users\mathe\battery-tray-go
+powershell -ExecutionPolicy Bypass -File build.ps1 -Version 1.0.1
+```
+
+O script faz `go vet` + `gofmt`, gera os recursos Win32 (ícone, VersionInfo e
+manifestação com `go-winres`), compila o `batterytray.exe`, monta o
+`dist\Setup.exe` (com o app embutido) e o `.zip` — e imprime os hashes SHA256.
+
+Build manual só do app:
+
 ```powershell
 cd C:\Users\mathe\battery-tray-go
 $env:CGO_ENABLED='1'
@@ -76,6 +89,11 @@ Requer Go + GCC (para o `hidapi` em cgo). Dependências: `getlantern/systray`,
 - `alert.go` — limiares 10% / 5% por ID de dispositivo e persistência
 - `notify.go` — toast Win32 próprio (janela sem foco, thread fixa, sem processos)
 - `icon.ico` — ícone embutido no binário
+- `installer/setup.cs` — instalador WinForms (compilado com o `csc` do Windows);
+  `installer/setup.manifest` — manifestação `asInvoker` do instalador
+- `winres/` — configuração do `go-winres` (ícone, VersionInfo e manifestação
+  do app; o `.syso` gerado é ignorado pelo git)
+- `build.ps1` — build completo: vet/gofmt → recursos Win32 → app → Setup → zip
 - `probe/` — sonda de hardware (não entra no exe); ver abaixo
 
 ## Sonda de hardware (`probe/`)
@@ -103,6 +121,74 @@ go run ./probe 8    # uma fase específica (1,2,5,8,9,10,11)
 > p0 p1 p2 | swID`, com `swID=0x0A`. A função vai no **nibble alto** do byte 3 —
 > uma versão antiga do probe a colocava no nibble baixo e o aparelho sempre
 > executava a função 0 (toda resposta saía igual).
+
+## Antivírus, SmartScreen e "app não assinado"
+
+Programas **sem assinatura digital de código** são frequentemente sinalizados
+por antivírus — principalmente binários novos, compilados em Go (UPX-like
+stripping com `-s -w`) e instaladores que extraem um exe e criam um item de
+inicialização automática. **Isso não é vírus**: o programa só consulta os
+periféricos por HID e não baixa nem grava nada. Assinatura digital (certificado
+OV/EV ou SignPath para open source) é o que elimina de vez esses avisos.
+
+Enquanto isso, o que fazer:
+
+### Permitir o app no Microsoft Defender
+
+1. **SmartScreen** (janela azul "Windows protegeu o PC"): clique em
+   *Mais informações → Executar assim mesmo*. O aviso some depois de o app
+   ser usado/instalado normalmente.
+2. **Defender bloqueou o arquivo**: *Segurança do Windows → Proteção contra
+   vírus e ameaças → Proteções contra vírus e ameaças → Adicionar ou remover
+   exclusões* e inclua a pasta de instalação
+   (`%LOCALAPPDATA%\BatteryTray`) — ou o arquivo baixado, antes de rodar.
+3. Depois de permitir, pode também enviar o arquivo ao Microsoft para análise
+   (ver abaixo).
+
+### Pedir revisão ao Microsoft (gratuito)
+
+Submeta os arquivos em
+[https://www.microsoft.com/wdsi/filesubmission](https://www.microsoft.com/wdsi/filesubmission)
+(preferir **"I'm a developer..."** para ter acompanhamento por e-mail):
+
+- `Setup.exe` (instalador, ~4,3 MB)
+- `batterytray.exe` (app, ~4,3 MB)
+
+Na descrição, em inglês, explique brevemente: *"Open-source battery monitor
+for Logitech/MCHOSE peripherals. Reads battery level over HID (read-only);
+no network, no persistence besides an optional Startup shortcut. No code
+signing certificate available (free project)."* Inclua o link do repositório
+GitHub — o código aberto ajuda muito na análise.
+
+O mesmo processo vale para outros fabricantes (Kaspersky, Avast/AVG,
+Bitdefender etc.): todos têm formulário público de "falso positivo" em seus
+sites, e o código aberto no GitHub é o principal argumento.
+
+### Hashes dos arquivos (v1.0.1)
+
+Confira se o arquivo baixado bate com estes hashes ( PowerShell:
+
+```powershell
+Get-FileHash .\Setup.exe -Algorithm SHA256
+Get-FileHash .\batterytray.exe -Algorithm SHA256
+```
+
+| Arquivo | SHA256 |
+|---|---|
+| `batterytray.exe` | `2B6E2FA2D743D40F8BB5F1703B0B58047D5DB255B730C7486C185AE7E59DC06A` |
+| `Setup.exe` | `470E9058695869E0878B4A1DE6E44C649D12697F19B791FB549BDC59C14CD645` |
+
+> Cada build gera hashes diferentes — os acima valem para a release v1.0.1.
+
+### O que já foi feito para reduzir as detecções (v1.0.1)
+
+- **Manifestação explícita** nos dois exes (`asInvoker`: nunca pede
+  admin; comctl32 v6 + DPI awareness).
+- **VersionInfo completo** (empresa, descrição, copyright, versão 1.0.1.0)
+  em `batterytray.exe` (via `go-winres`) e no `Setup.exe` (atributos de
+  assembly) — arquivos "anônimos" sem metadados chamam mais atenção.
+- **Build reproduzível**: o `build.ps1` gera tudo a partir do código, então
+  qualquer pessoa pode conferir que o binário da release vem daqui.
 
 ## Notas
 

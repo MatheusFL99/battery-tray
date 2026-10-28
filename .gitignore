@@ -10,3 +10,5 @@ batterytray.cfg
 # saidas de build auxiliares
 /probe.exe
 /Setup.exe
+*.syso
+/winres/winres.build.json

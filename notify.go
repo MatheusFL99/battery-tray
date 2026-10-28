@@ -21,8 +21,8 @@ const (
 
 // níveis de alerta (mesmos limiares usados na detecção)
 const (
-	levelWarn  = 10
-	levelCrit  = 5
+	levelWarn = 10
+	levelCrit = 5
 )
 
 type toastMsg struct {
@@ -37,33 +37,33 @@ var (
 	gdi32    = windows.NewLazySystemDLL("gdi32.dll")
 	kernel32 = windows.NewLazySystemDLL("kernel32.dll")
 
-	pRegisterClassExW  = user32.NewProc("RegisterClassExW")
-	pCreateWindowExW   = user32.NewProc("CreateWindowExW")
-	pDefWindowProcW    = user32.NewProc("DefWindowProcW")
-	pShowWindow        = user32.NewProc("ShowWindow")
-	pDestroyWindow     = user32.NewProc("DestroyWindow")
-	pSetTimer          = user32.NewProc("SetTimer")
-	pKillTimer         = user32.NewProc("KillTimer")
-	pGetMessageW       = user32.NewProc("GetMessageW")
-	pTranslateMessage  = user32.NewProc("TranslateMessage")
-	pDispatchMessageW  = user32.NewProc("DispatchMessageW")
-	pBeginPaint        = user32.NewProc("BeginPaint")
-	pEndPaint          = user32.NewProc("EndPaint")
-	pSetWindowPos      = user32.NewProc("SetWindowPos")
-	pPostMessageW      = user32.NewProc("PostMessageW")
-	pGetClientRect     = user32.NewProc("GetClientRect")
-	pSystemParamInfoW  = user32.NewProc("SystemParametersInfoW")
-	pSetBkMode         = user32.NewProc("SetBkMode")
-	pSetTextColor      = user32.NewProc("SetTextColor")
-	pDrawTextW         = user32.NewProc("DrawTextW")
-	pGetModuleHandleW  = kernel32.NewProc("GetModuleHandleW")
-	pCreateSolidBrush  = gdi32.NewProc("CreateSolidBrush")
-	pCreatePen         = gdi32.NewProc("CreatePen")
-	pCreateFontW       = gdi32.NewProc("CreateFontW")
-	pSelectObject      = gdi32.NewProc("SelectObject")
-	pDeleteObject      = gdi32.NewProc("DeleteObject")
-	pRoundRect         = gdi32.NewProc("RoundRect")
-	pRectangle         = gdi32.NewProc("Rectangle")
+	pRegisterClassExW = user32.NewProc("RegisterClassExW")
+	pCreateWindowExW  = user32.NewProc("CreateWindowExW")
+	pDefWindowProcW   = user32.NewProc("DefWindowProcW")
+	pShowWindow       = user32.NewProc("ShowWindow")
+	pDestroyWindow    = user32.NewProc("DestroyWindow")
+	pSetTimer         = user32.NewProc("SetTimer")
+	pKillTimer        = user32.NewProc("KillTimer")
+	pGetMessageW      = user32.NewProc("GetMessageW")
+	pTranslateMessage = user32.NewProc("TranslateMessage")
+	pDispatchMessageW = user32.NewProc("DispatchMessageW")
+	pBeginPaint       = user32.NewProc("BeginPaint")
+	pEndPaint         = user32.NewProc("EndPaint")
+	pSetWindowPos     = user32.NewProc("SetWindowPos")
+	pPostMessageW     = user32.NewProc("PostMessageW")
+	pGetClientRect    = user32.NewProc("GetClientRect")
+	pSystemParamInfoW = user32.NewProc("SystemParametersInfoW")
+	pSetBkMode        = user32.NewProc("SetBkMode")
+	pSetTextColor     = user32.NewProc("SetTextColor")
+	pDrawTextW        = user32.NewProc("DrawTextW")
+	pGetModuleHandleW = kernel32.NewProc("GetModuleHandleW")
+	pCreateSolidBrush = gdi32.NewProc("CreateSolidBrush")
+	pCreatePen        = gdi32.NewProc("CreatePen")
+	pCreateFontW      = gdi32.NewProc("CreateFontW")
+	pSelectObject     = gdi32.NewProc("SelectObject")
+	pDeleteObject     = gdi32.NewProc("DeleteObject")
+	pRoundRect        = gdi32.NewProc("RoundRect")
+	pRectangle        = gdi32.NewProc("Rectangle")
 )
 
 // constantes de janela/mensagem
@@ -82,12 +82,12 @@ const (
 
 	spiGetWorkArea = 0x0030
 
-	transparentBk = 1
-	psSolid       = 0
-	fwBold        = 700
+	transparentBk  = 1
+	psSolid        = 0
+	fwBold         = 700
 	defaultCharSet = 1
 
-	dtSingleLine = 0x00002000
+	dtSingleLine  = 0x00002000
 	dtEndEllipsis = 0x00008000
 	dtNoPrefix    = 0x00000800
 	dtLeft        = 0x00000000
