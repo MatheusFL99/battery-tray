@@ -1,0 +1,12 @@
+# binarios gerados (a release no GitHub leva eles)
+/batterytray.exe
+/dist/
+*.exe~
+
+# dados em tempo de execucao (criados ao lado do exe)
+*.log
+batterytray.cfg
+
+# saidas de build auxiliares
+/probe.exe
+/Setup.exe
