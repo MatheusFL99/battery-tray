@@ -58,7 +58,7 @@ Para gerar tudo (app + instalador + zip da release), use o script:
 
 ```powershell
 cd C:\Users\mathe\battery-tray-go
-powershell -ExecutionPolicy Bypass -File build.ps1 -Version 1.0.1
+powershell -ExecutionPolicy Bypass -File build.ps1 -Version 1.0.2
 ```
 
 O script faz `go vet` + `gofmt`, gera os recursos Win32 (ícone, VersionInfo e
@@ -164,7 +164,7 @@ O mesmo processo vale para outros fabricantes (Kaspersky, Avast/AVG,
 Bitdefender etc.): todos têm formulário público de "falso positivo" em seus
 sites, e o código aberto no GitHub é o principal argumento.
 
-### Hashes dos arquivos (v1.0.1)
+### Hashes dos arquivos (v1.0.2)
 
 Confira se o arquivo baixado bate com estes hashes ( PowerShell:
 
@@ -175,10 +175,10 @@ Get-FileHash .\batterytray.exe -Algorithm SHA256
 
 | Arquivo | SHA256 |
 |---|---|
-| `batterytray.exe` | `2B6E2FA2D743D40F8BB5F1703B0B58047D5DB255B730C7486C185AE7E59DC06A` |
-| `Setup.exe` | `470E9058695869E0878B4A1DE6E44C649D12697F19B791FB549BDC59C14CD645` |
+| `batterytray.exe` | `A626228ADE49AFBF4237ADD82309E46853586CC7BD140560D2525EAC43B3B510` |
+| `Setup.exe` | `A9E2A56A664AE0B9A5D0A91F4DCD7C5FAC52F274C0BE6E0B9394A88A8300FD9A` |
 
-> Cada build gera hashes diferentes — os acima valem para a release v1.0.1.
+> Cada build gera hashes diferentes — os acima valem para a release v1.0.2.
 
 ### O que já foi feito para reduzir as detecções (v1.0.1)
 
